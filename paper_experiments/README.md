@@ -35,4 +35,3 @@ The expected artifact layout is documented in `../docs/DATA_AND_ARTIFACTS.md`.
 
 - No raw EHR data, generated outputs, predictions, checkpoints, or API keys are included.
 - The historical v11-v13 import chain is preserved because the final run imports those scripts.
-- The copied `v13_3_weak_pairwise_hierarchical_small/run_experiment.py` has only its repository-root path adjusted so it can resolve `paper_experiments/memory_and_reranking/` in this anonymous layout.
