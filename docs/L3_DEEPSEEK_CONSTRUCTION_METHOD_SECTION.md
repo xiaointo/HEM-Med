@@ -9,10 +9,10 @@ It is recommended to place this part in “3.3.1 Patient-level Attribution Memor
 For each ICU stay (s_i) in the training set and each observed medication (m_j), we construct a stay–medication query instance:
 
 [
-q_{ij}=\left(h_i,m_j,c_j,\mathcal D_i,\mathcal P_i,\mathcal L_i\right),
+q_{ij}=\left(h_i,m_j,\mathcal D_i,\mathcal P_i,\mathcal L_i\right),
 ]
 
-where (h_i) denotes the hospital identifier, (c_j) denotes the medication function category, and
+where (h_i) denotes the hospital identifier and
 (\mathcal D_i), (\mathcal P_i), and (\mathcal L_i) denote the diagnoses, procedures, and abnormal laboratory signals observed in this stay, respectively.
 
 We call the DeepSeek API to perform constrained candidate attribution for each (q_{ij}). The task of the model is not to generate new clinical indications, but to select at most one most representative single anchor from the existing context of the current stay:
@@ -92,6 +92,4 @@ At the same time, we record the number of hospitals covered by the anchor and th
 
 These labels indicate the strength of empirical support rather than clinical causal levels. The complete L3 is then used only as an intermediate statistical source for constructing L1 consensus memory, L2 hospital residual memory, and weak auxiliary evidence; during online recommendation, the original patient-level L3 records are not directly retrieved.
 
-## Concise Version for Direct Replacement in the Main Text
 
-> **DeepSeek-assisted patient-context attribution.** For each stay–medication observation pair in the training set, we serialize the hospital, medication, medication category, and the diagnosis, procedure, and abnormal laboratory signal sequences of the stay into a structured input, and call DeepSeek to select at most one candidate context anchor. Candidate anchors are only allowed to come from a single diagnosis, procedure, or laboratory abnormality within the current stay; if there is insufficient evidence, the model returns an empty anchor. The output is parsed as structured JSON and reconnected with the original stay metadata to verify the consistency of the stay, hospital, medication, anchor type, and anchor text. Anchors that fail context verification are set to empty or excluded from the anchored aggregation set. Subsequently, the system completes the diagnoses, procedures, laboratory abnormalities, co-medications, and basic demographic features, and computes global and within-hospital anchor–drug support and conditional frequencies only on the training set. The L3 attribution hypothesis only represents an auditable candidate empirical attribution, and does not indicate confirmed prescription intention or clinical causality. Online inference does not directly retrieve the original L3 records; L3 is only used for offline aggregation into L1 consensus memory, L2 hospital residual memory, and attenuated weak auxiliary evidence.
