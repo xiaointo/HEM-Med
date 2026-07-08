@@ -87,7 +87,7 @@ configs/private/deepseek_key_template.py
 
 ## Excluded Generated Files
 
-Do not commit files under `l3_construction/outputs/`, including:
+Files under `l3_construction/outputs/` are not included, including:
 
 ```text
 L3_deepseek_generated_*.jsonl
@@ -99,4 +99,4 @@ failed_records_*.jsonl
 schema_error_records_*.jsonl
 ```
 
-These files may contain private EHR-derived intermediate information, API responses, or run metadata.
+These files contain private EHR-derived intermediate information, API responses, or run metadata.
