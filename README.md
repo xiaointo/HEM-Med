@@ -1,4 +1,4 @@
-<img src="Pictures/hem-med.svg" alt="title" border="0">
+<img src="Pictures/hem-med.png" alt="title" border="0">
 
 <p float="left"> <img src="https://img.shields.io/badge/python-v3.10+-red"> <img src="https://img.shields.io/badge/reranker-pure%20python-blue"> <img src="https://img.shields.io/badge/API-DeepSeek%2FOpenAI--compatible-green"> </p>
 
