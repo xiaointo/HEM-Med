@@ -1,0 +1,4 @@
+# The final Improved Balanced reranker uses only the Python standard library.
+# The packages below are required only for L3 DeepSeek/OpenAI-compatible API construction.
+openai>=1.0.0
+httpx>=0.24.0

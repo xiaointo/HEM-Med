@@ -1,0 +1,28 @@
+# Default paths for the anonymous HEM-Med release.
+# Replace these paths locally after obtaining or regenerating the required artifacts.
+
+seed: 1203
+
+paths:
+  data_root: data
+  split_dir: data/splits/split_8_1_1_nonempty_med_seed1203
+  train_file: data/splits/split_8_1_1_nonempty_med_seed1203/train_80pct.jsonl
+  validation_file: data/splits/split_8_1_1_nonempty_med_seed1203/validation_10pct.jsonl
+  test_file: data/splits/split_8_1_1_nonempty_med_seed1203/test_10pct.jsonl
+  l1_memory: data/memory/L1_statistical_memory_final_cleaned_with_weak_candidates.json
+  l2_memory: data/memory/L2_final_merged_memory.json
+  ddi_file: data/ddi/eicu_space_ddi_pairs_simple.csv
+  output_dir: outputs
+
+reranker:
+  candidate_depth: 60
+  weak_weight: 0.42
+  ddi_scale: 0.22
+  pointwise_epochs: 3
+  pairwise_epochs: 4
+  count_model_epochs: 8
+
+l3_api:
+  provider: deepseek
+  model: deepseek-chat
+  api_key_env: DEEPSEEK_API_KEY
