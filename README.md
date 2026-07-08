@@ -19,11 +19,20 @@ Raw EHR data, generated L3/L1/L2 memories, trained outputs, predictions, API res
 Figure 1: Overview of HEM-Med. The framework constructs patient-level attribution memory, aggregates it into cross-hospital consensus memory and hospital-specific residual memory, and generates the final medication set through calibrated prediction and DDI-aware decoding.
 
 ✨ Overview
+<div align="center"> <img src="Pictures/Gap.png" alt="framework" width="70%" border="0"> </div>
 
 HEM-Med addresses two key challenges in multi-center medication recommendation:
 
-Cross-hospital transfer risk: Directly transferring prescribing knowledge across hospitals may introduce negative transfer because hospitals differ in patient populations, formularies, treatment routines, and local prescribing preferences.
-Medication safety: ICU medication recommendation is a constrained multi-label prediction problem. The final medication set should consider both therapeutic matching and drug-drug interaction risk.
+Gap 1: Entangled Cross-Hospital Knowledge
+
+Existing methods for multi-center medication recommendation often overlook a subtle but critical clinical reality: prescribing decisions are influenced not only by generalizable medical knowledge, but also by hospital resources, institution-specific treatment pathways, local medication protocols, departmental expertise, and physician prescribing preferences.
+As illustrated in the motivation figure, different hospitals may exhibit distinct medication distributions even for the same disease condition. In complex ICU scenarios with multiple coexisting conditions, directly transferring such entangled knowledge across hospitals may lead to negative transfer. In other words, knowledge acquired from one hospital may not always be clinically effective or locally feasible when directly applied to another hospital.
+
+Gap 2: Insufficient Safety Awareness
+Existing transfer-based recommendation methods mainly focus on representation alignment, while paying insufficient attention to the safety constraints inherent in clinical medication recommendation. Unlike general cross-domain recommendation, medication recommendation is a clinically constrained multi-label prediction problem that must jointly consider treatment requirements, medication safety, potential drug-drug interactions, and local formulary feasibility.
+If multi-hospital recommendation only accounts for distributional discrepancies without explicitly modeling DDI risks and local feasibility, it may generate clinically inappropriate or unsafe medication combinations, posing significant risks to real-world clinical deployment.
+
+To address these challenges, HEM-Med explicitly disentangles cross-hospital consensus experience from hospital-specific residual prescribing patterns and integrates DDI-aware decoding for safer medication set generation.
 
 HEM-Med introduces a hierarchical agentic memory framework with three levels:
 
@@ -112,14 +121,11 @@ Drug-level micro PR-AUC	0.4161
 Case-level mean PR-AUC	0.5301
 DDI Rate	8.31%
 SAJ	0.2976
+SafeScore 0.3649
 
 For more detailed experimental results, please see docs/EXPERIMENT_SUMMARY.md.
 
 🧠 Method Pipeline
-
-<div align="center"> <img src="Pictures/pipeline.png" alt="pipeline" width="70%" border="0"> </div>
-
-Figure 2: Core experimental pipeline of HEM-Med, including L3 construction, L1/L2 memory aggregation, candidate generation, calibrated reranking, medication-count prediction, and DDI-aware decoding.
 
 The main pipeline consists of the following stages:
 
@@ -275,18 +281,6 @@ medication_class_map.json
 
 These files are not included in the anonymous release because they are generated artifacts.
 
-🔬 Development Ablation
-
-The development ablation for the weak-evidence pairwise method is available at:
-
-export HEM_MED_DATA_DIR=/path/to/hem_med_data
-python3 paper_experiments/v13_3_weak_pairwise_hierarchical_small/run_experiment.py
-
-It writes outputs under:
-
-paper_experiments/v13_3_weak_pairwise_hierarchical_small/outputs_test300/
-
-This 3,000 / 500 / 300 experiment is for method development and ablation. Publication-level exact-drug results should use the full official split run above.
 
 🧩 Lightweight Reference Pipeline
 
@@ -326,9 +320,7 @@ trained weights and generated reports;
 prediction files;
 API raw responses and token-usage logs;
 private API keys;
-PDF manuscripts or identifying metadata;
-outputs/, __pycache__/, *.pyc, *.sqlite, generated *.jsonl, and generated *.csv files;
-all generated files under l3_construction/outputs/.
+PDF manuscripts or identifying metadata
 
 The .gitignore is configured to exclude these categories.
 
