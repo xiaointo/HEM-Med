@@ -1,8 +1,8 @@
 # HEM-Med
 
-HEM-Med is a hierarchical agentic memory framework for safe multi-center medication recommendation. This anonymous release contains the paper experiment code for the final Improved Balanced method, plus a cleaner reference implementation for lightweight reading and smoke tests.
+HEM-Med is a hierarchical agentic memory framework for safe multi-center medication recommendation. This anonymous release contains the paper experiment code for the final Improved Balanced method.
 
-This public release intentionally excludes raw EHR data, generated intermediate files, trained weights, full memory JSON files, predictions, API responses, and private API keys.
+This public release excludes raw EHR data, generated intermediate files, trained weights, full memory JSON files, predictions, API responses, and private API keys.
 
 ## Repository Layout
 
@@ -111,5 +111,3 @@ The final reranking path uses only the Python standard library. The L3 DeepSeek/
 - No patient data are included.
 - No generated L3/L1/L2 result files are included.
 - No API keys are included.
-- No `outputs/`, `__pycache__/`, PDF, or private local artifact files should be committed.
-- The full paper experiment summary is provided in `docs/EXPERIMENT_SUMMARY.md`.
